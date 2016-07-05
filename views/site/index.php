@@ -1,53 +1,44 @@
 <?php
-
 /* @var $this yii\web\View */
-
-$this->title = 'My Yii Application';
+$this->title = 'Home';
+use yii\widgets\LinkPager;
 ?>
-<div class="site-index">
+<div class="content clearfix">
+    <div class="container">
+        <?php foreach ($models as $model):?>
+            <div class="col-xs-9 col-sm-5 col-md-4 col-lg-3">
+                <div class="thumbnail">
+                    <a href='/photo/<?php echo $model->id;?>'>
+                        <img src='<?php echo $model->images;?>' width="400" hight="400" title='увеличить'>
+                    </a>
+                    <div class="caption">
+                        <h3><?php echo $model->title;?></h3>
+                        <?php 
+                        $rand = array('default','success','info','warning','danger'); 
+                        $rand = $rand[rand(0,4)];   
+                        ?>
+                        <span class="label label-<?php echo $rand;?>">
+                            <?php echo $model->category_id;?>
+                        </span>
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
-
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+                        <br/><br/>
+                        <p><?php echo $model->description;?></p>
+                        <p>
+                            <a href='/photo/<?php echo $model->id;?>' class="btn btn-primary " >Full width</a>
+                            <a href="/gallery?user=<?php echo $model->user_id;?>" class="btn btn-default" role="button">User's album</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
     </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
-            </div>
+    <div class="navigation">
+        <center>
+            <?
+            echo LinkPager::widget([
+                'pagination' => $pages,
+                ]);
+                ?>
+            </center>
         </div>
-
     </div>
-</div>
