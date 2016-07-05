@@ -44,6 +44,7 @@ $config = [
            'about'=>'site/about',
            'photo/add'=>'photos/create',
            'photo/update'=>'photos/update',
+           'photo'=>'photos/view',
            'user/login'=>'user/security/login',
            'user/logout'=>'user/security/logout',
            'home'=>'site/index',

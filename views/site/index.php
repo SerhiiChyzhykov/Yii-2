@@ -8,7 +8,7 @@ use yii\widgets\LinkPager;
         <?php foreach ($models as $model):?>
             <div class="col-xs-9 col-sm-5 col-md-4 col-lg-3">
                 <div class="thumbnail">
-                    <a href='/photo/<?php echo $model->id;?>'>
+                    <a href='/photo?id=<?php echo $model->id;?>'>
                         <img src='<?php echo $model->images;?>' width="400" hight="400" title='увеличить'>
                     </a>
                     <div class="caption">
@@ -24,7 +24,7 @@ use yii\widgets\LinkPager;
                         <br/><br/>
                         <p><?php echo $model->description;?></p>
                         <p>
-                            <a href='/photo/<?php echo $model->id;?>' class="btn btn-primary " >Full width</a>
+                            <a href='/photo?id=<?php echo $model->id;?>' class="btn btn-primary " >Full width</a>
                             <a href="/gallery?user=<?php echo $model->user_id;?>" class="btn btn-default" role="button">User's album</a>
                         </p>
                     </div>

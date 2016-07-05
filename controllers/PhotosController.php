@@ -53,8 +53,13 @@ class PhotosController extends Controller
      */
     public function actionView($id)
     {
+        $model = (new \yii\db\Query())
+        ->from('photos')
+        ->where(['id' => $id])
+        ->all();
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
             ]);
     }
 
@@ -69,9 +74,9 @@ class PhotosController extends Controller
 
         if (Yii::$app->request->isPost) {
 
-           $model->file = UploadedFile::getInstance($model, 'file');
+         $model->file = UploadedFile::getInstance($model, 'file');
 
-           if ($model->file && $model->validate()) {    
+         if ($model->file && $model->validate()) {    
 
             $filename = substr(md5(microtime() . rand(0, 9999)), 0, 20);
 
@@ -84,14 +89,14 @@ class PhotosController extends Controller
         return $this->redirect(['view', 'id' => $model->id]);
     } else {
 
- 
+
         $items = ArrayHelper::map(Categories::find()->all(), 'id', 'title');
 
-       return $this->render('create', [
-        'model' => $model,
-        'items'=> $items,
-        ]);
-   }
+        return $this->render('create', [
+            'model' => $model,
+            'items'=> $items,
+            ]);
+    }
 }
 
     /**
@@ -106,9 +111,9 @@ class PhotosController extends Controller
         
         if (Yii::$app->request->isPost) {
 
-           $model->file = UploadedFile::getInstance($model, 'file');
+         $model->file = UploadedFile::getInstance($model, 'file');
 
-           if ($model->file && $model->validate()) {    
+         if ($model->file && $model->validate()) {    
 
             $filename = substr(md5(microtime() . rand(0, 9999)), 0, 20);
 
@@ -119,10 +124,12 @@ class PhotosController extends Controller
     if ($model->load(Yii::$app->request->post()) && $model->save()) {
         return $this->redirect(['view', 'id' => $model->id]);
     } else {
-        return $this->render('update', [
-            'model' => $model,
-            ]);
-    }
+       $items = ArrayHelper::map(Categories::find()->all(), 'id', 'title');
+       return $this->render('update', [
+        'model' => $model,
+        'items'=> $items,
+        ]);
+   }
 }
 
     /**

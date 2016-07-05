@@ -56,10 +56,11 @@ class Photos extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'title' => 'Title',
-            'description' => 'description',
+            'description' => 'Description',
             'images' => 'File',
             'user_id' => '',
             'date' => '',
+            'category_id' => 'Category',
         ];
     }
 }
