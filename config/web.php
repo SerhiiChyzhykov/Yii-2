@@ -40,11 +40,15 @@ $config = [
         'db' => require(__DIR__ . '/db.php'),
 
         'urlManager' => [
-            'enablePrettyUrl' => false,
+            'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
            'gii' => 'index.php/gii',
            'about'=>'site/about',
+           'login'=>'site/login',
+           'logout'=>'site/logout',
+           'home'=>'site/index',
+           'add'=>'photos/create',
             ],
         ],
   

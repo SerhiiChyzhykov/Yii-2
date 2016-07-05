@@ -3,6 +3,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
+use yii\helpers\Url;
 use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
@@ -35,17 +36,25 @@ AppAsset::register($this);
         echo Nav::widget([
             'options' => ['class' => 'navbar-nav navbar-right'],
             'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Config', 'url' => ['/baner']],
-            ['label' => 'Contact', 'url' => ['/site/contact']].
+            ['label' => 'Home', 'url' => ['/home']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
                 ) : (
                 '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
+                . 
+                '<a href =" '.Url::to('/add').'">Add</a>'
+                . '</li>' .
+                '<li>'
+                . 
+                '<li>'
+                . 
+                '<a href =" '.Url::to('/gallery').'">Gallery</a>'
+                . '</li>' .
+                '<li>'
+                . Html::beginForm(['/logout'], 'post')
                 . Html::submitButton(
                     'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link']
+                    ['class' => 'btn btn-link' , 'style' => 'padding-top: 13px;']
                     )
                 . Html::endForm()
                 . '</li>'
@@ -54,8 +63,6 @@ AppAsset::register($this);
                 ]);
         NavBar::end();
         ?>
-
-
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>
