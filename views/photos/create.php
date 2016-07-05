@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Baner */
 
-$this->title = 'Create Baner';
-$this->params['breadcrumbs'][] = ['label' => 'Baners', 'url' => ['index']];
+$this->title = 'Add Photo';
+
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="baner-create">

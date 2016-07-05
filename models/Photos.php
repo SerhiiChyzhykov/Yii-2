@@ -44,7 +44,7 @@ class Photos extends \yii\db\ActiveRecord
         return [
             [['user_id','category_id'], 'integer'],
             [['file'], 'file', 'extensions' => 'gif, jpg,png'],
-            [['title','images','description'], 'string', 'max' => 50],
+            [['title','images','description','date'], 'string', 'max' => 50],
         ];
     }
 
@@ -58,7 +58,8 @@ class Photos extends \yii\db\ActiveRecord
             'title' => 'Title',
             'description' => 'description',
             'images' => 'File',
-            'user_id' => 'user_id',
+            'user_id' => '',
+            'date' => '',
         ];
     }
 }
