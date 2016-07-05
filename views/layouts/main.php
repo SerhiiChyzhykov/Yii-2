@@ -38,48 +38,55 @@ AppAsset::register($this);
             'items' => [
             ['label' => 'Home', 'url' => ['/home']],
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
+                ['label' => 'Login', 'url' => ['/user/login']]
                 ) : (
                 '<li>'
                 . 
                 '<a href =" '.Url::to('/add').'">Add</a>'
                 . '</li>' .
-                '<li>'
-                . 
+                
                 '<li>'
                 . 
                 '<a href =" '.Url::to('/gallery').'">Gallery</a>'
                 . '</li>' .
-                '<li>'
-                . Html::beginForm(['/logout'], 'post')
-                . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
-                    ['class' => 'btn btn-link' , 'style' => 'padding-top: 13px;']
+                '<li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hello '.Yii::$app->user->identity->username.' <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href =" '.Url::to('/gallery').'">1</a></li>
+                    <li><a href =" '.Url::to('/gallery').'">2</a></li>
+                    <li><a href =" '.Url::to('/gallery').'">3</a></li>
+                    <li>
+                    '
+                    . Html::beginForm(['/user/logout'], 'post')
+                    . Html::submitButton(
+                        'Logout',
+                        ['class' => 'btn btn-link' , 'style' => 'padding-top: 13px;']
+                        )
+                    . Html::endForm()
+                    . '</li></ul></li>'
                     )
-                . Html::endForm()
-                . '</li>'
-                )
                 ],
                 ]);
         NavBar::end();
         ?>
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ]) ?>
-        </header>
-        <div class="container">
-            <main>
-                <?= $content ?>
-            </main>
-        </div>
-        <footer class="footer">
-            <div class="container">
-                <p class="pull-left">&copy; Gallery <?= date('Y') ?></p>
 
-                <p class="pull-right"><?= Yii::powered() ?></p>
-            </div>
-        </footer>
-        <?php $this->endBody() ?>
-    </body>
-    </html>
-    <?php $this->endPage() ?>
+    <?= Breadcrumbs::widget([
+        'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+        ]) ?>
+    </header>
+    <div class="container">
+        <main>
+            <?= $content ?>
+        </main>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <p class="pull-left">&copy; Gallery <?= date('Y') ?></p>
+
+            <p class="pull-right"><?= Yii::powered() ?></p>
+        </div>
+    </footer>
+    <?php $this->endBody() ?>
+</body>
+</html>
+<?php $this->endPage() ?>

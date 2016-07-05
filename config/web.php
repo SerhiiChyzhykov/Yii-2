@@ -14,10 +14,7 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'user' => [
-            'identityClass' => 'app\models\User',
-            'enableAutoLogin' => true,
-        ],
+
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
@@ -45,14 +42,28 @@ $config = [
             'rules' => [
            'gii' => 'index.php/gii',
            'about'=>'site/about',
-           'login'=>'site/login',
-           'logout'=>'site/logout',
+           'user/login'=>'user/security/login',
+           'user/logout'=>'user/security/logout',
            'home'=>'site/index',
-           'add'=>'photos/create',
+           'user/register'=>'user/registration/register',
+           'user/resend'=>'user/registration/resend',
+           'user/confirm'=>'user/registration/confirm',
+           'user/request'=>'user/recovery/request',
+           'user/reset'=>'user/recovery/reset',
+           'user/profile'=>'user/settings/profile',
+           'user/account'=>'user/settings/account',
+           'user/networks'=>'user/settings/networks',
+           'user/request'=>'user/recovery/request',
+           'user/request'=>'user/recovery/request',
             ],
         ],
   
     ],
+    'modules' => [
+    'user' => [
+        'class' => 'dektrium\user\Module',
+    ],
+],
     'params' => $params,
 ];
 
