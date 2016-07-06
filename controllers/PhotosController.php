@@ -41,21 +41,21 @@ class PhotosController extends Controller
      */
     public function actionIndex($user)
     {
-     $query = Photos::find()->where(['user_id' => $user]);
+       $query = Photos::find()->where(['user_id' => $user]);
 
-     $countQuery = clone $query;
+       $countQuery = clone $query;
 
-     $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 12]);
-     $pages->pageSizeParam = false;
-     if($user == ''):
-        
-         $user = Yii::$app->user->identity->id;
-     $models = $query->offset($pages->offset)
-     ->where(['user_id' => $user])
-     ->limit($pages->limit)
-     ->all();
+       $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 12]);
+       $pages->pageSizeParam = false;
+       if($user == ''):
 
-     else:
+           $user = Yii::$app->user->identity->id;
+       $models = $query->offset($pages->offset)
+       ->where(['user_id' => $user])
+       ->limit($pages->limit)
+       ->all();
+
+       else:
 
         $models = $query->offset($pages->offset)
     ->where(['user_id' => $user])
@@ -71,10 +71,10 @@ class PhotosController extends Controller
     }
 
     return $this->render('index', [
-       'models'   => $models,
-       'pages'    => $pages,
-       'category' => $category,
-       ]);
+     'models'   => $models,
+     'pages'    => $pages,
+     'category' => $category,
+     ]);
 }
     /**
      * Displays a single Photos model.
@@ -83,53 +83,88 @@ class PhotosController extends Controller
      */
     public function actionView($id)
     {
-        $post = new Post();
+        
+    $items = ArrayHelper::map(Categories::find()->all(), 'id', 'title');
+    $post = new Post();
 
-        $model = (new \yii\db\Query())
-        ->from('photos')
-        ->where(['id' => $id])
-        ->all();
+    $model = (new \yii\db\Query())
+    ->from('photos')
+    ->where(['id' => $id])
+    ->all();
 
-        $cat = (new \yii\db\Query())
-        ->from('categories')
-        ->all();
+    $cat = (new \yii\db\Query())
+    ->from('categories')
+    ->all();
 
-        $comments = (new \yii\db\Query())
-        ->from('post')
-        ->where(['photo_id' => $id])
-        ->orderBy('id DESC')
-        ->limit('5')
-        ->all();
+    $comments = (new \yii\db\Query())
+    ->from('post')
+    ->where(['photo_id' => $id])
+    ->orderBy('id DESC')
+    ->limit('5')
+    ->all();
 
-        foreach ($comments as $key) {
+    foreach ($comments as $key) {
 
-            $customer = User::findOne($key['user_id']);
-            $username = $customer->username;
-        }
-        if($post->load(Yii::$app->request->post()) && $post->user_id == NULL){
-         $messages['danger'] = 'You are not registered!'; 
-
-         return $this->render('view', [
-            'model'     => $model,
-            'cat'       => $cat,
-            'comments'  => $comments,
-            'username'  => $username,
-            'post'      => $post,
-            'messages'  => $messages,
-            ]);
-     }
-     elseif ($post->load(Yii::$app->request->post()) && $post->save()) {
-        return $this->redirect('/photo?id='.$id);
-    } else {
-
-        return $this->render('view', [
-            'model'     => $model,
-            'cat'       =>  $cat,
-            'comments'  => $comments,
-            'username'  => $username,
-            'post'      => $post,
-            ]);
+        $customer = User::findOne($key['user_id']);
+        $username = $customer->username;
     }
+    $photo = $this->findModel($id);
+        
+        if (Yii::$app->request->isPost) {
+
+           $photo->file = UploadedFile::getInstance($photo, 'file');
+
+           if ($photo->file && $photo->validate()) {    
+
+            $filename = substr(md5(microtime() . rand(0, 9999)), 0, 20);
+
+            $photo->file->saveAs('uploads/' .$filename . '.' . $photo->file->extension);
+            $photo->images = ('uploads/' .$filename . '.' . $photo->file->extension);
+        }
+    }
+     if ($photo->load(Yii::$app->request->post()) && $photo->save()) {
+        return $this->redirect(['view', 'id' => $photo->id]);
+    } else {
+     $items = ArrayHelper::map(Categories::find()->all(), 'id', 'title');
+       return $this->render('view', [
+        'model'     => $model,
+        'cat'       => $cat,
+        'comments'  => $comments,
+        'username'  => $username,
+        'post'      => $post,
+        'messages'  => $messages,
+        'items'     => $items,
+        'photo'     => $photo,
+        ]);
+ }
+    if($post->load(Yii::$app->request->post()) && $post->user_id == NULL){
+       $messages['danger'] = 'You are not registered!'; 
+
+       return $this->render('view', [
+        'model'     => $model,
+        'cat'       => $cat,
+        'comments'  => $comments,
+        'username'  => $username,
+        'post'      => $post,
+        'messages'  => $messages,
+        'items'     => $items,
+        'photo'     => $photo,
+        ]);
+   }
+   elseif ($post->load(Yii::$app->request->post()) && $post->save()) {
+    return $this->redirect('/photo?id='.$id);
+} else {
+
+    return $this->render('view', [
+        'model'     => $model,
+        'cat'       =>  $cat,
+        'comments'  => $comments,
+        'username'  => $username,
+        'post'      => $post,
+        'items'     => $items,
+        'photo'     => $photo,
+        ]);
+}
 
 }
 
@@ -144,9 +179,9 @@ class PhotosController extends Controller
 
         if (Yii::$app->request->isPost) {
 
-         $model->file = UploadedFile::getInstance($model, 'file');
+           $model->file = UploadedFile::getInstance($model, 'file');
 
-         if ($model->file && $model->validate()) {    
+           if ($model->file && $model->validate()) {    
 
             $filename = substr(md5(microtime() . rand(0, 9999)), 0, 20);
 
@@ -181,9 +216,9 @@ class PhotosController extends Controller
         
         if (Yii::$app->request->isPost) {
 
-         $model->file = UploadedFile::getInstance($model, 'file');
+           $model->file = UploadedFile::getInstance($model, 'file');
 
-         if ($model->file && $model->validate()) {    
+           if ($model->file && $model->validate()) {    
 
             $filename = substr(md5(microtime() . rand(0, 9999)), 0, 20);
 
@@ -194,12 +229,12 @@ class PhotosController extends Controller
     if ($model->load(Yii::$app->request->post()) && $model->save()) {
         return $this->redirect(['view', 'id' => $model->id]);
     } else {
-       $items = ArrayHelper::map(Categories::find()->all(), 'id', 'title');
-       return $this->render('update', [
+     $items = ArrayHelper::map(Categories::find()->all(), 'id', 'title');
+     return $this->render('update', [
         'model' => $model,
         'items'=> $items,
         ]);
-   }
+ }
 }
 
     /**
@@ -212,7 +247,7 @@ class PhotosController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/home']);
     }
 
     /**
