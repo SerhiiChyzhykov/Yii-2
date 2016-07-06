@@ -6,11 +6,14 @@ use Yii;
 use app\models\Photos;
 use app\models\PhotosSearch;
 use app\models\Categories;
+use app\models\User;
+use app\models\Post;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use yii\helpers\ArrayHelper;
+use app\controllers\Query;
 /**
  * BanerController implements the CRUD actions for Baner model.
  */
@@ -53,14 +56,54 @@ class PhotosController extends Controller
      */
     public function actionView($id)
     {
+        $post = new Post();
+
         $model = (new \yii\db\Query())
         ->from('photos')
         ->where(['id' => $id])
         ->all();
 
+        $cat = (new \yii\db\Query())
+        ->from('categories')
+        ->all();
+
+        $comments = (new \yii\db\Query())
+        ->from('post')
+        ->where(['photo_id' => $id])
+        ->orderBy('id DESC')
+        ->limit('5')
+        ->all();
+
+        foreach ($comments as $key) {
+
+            $customer = User::findOne($key['user_id']);
+            $username = $customer->username;
+        }
+        if($post->load(Yii::$app->request->post()) && $post->user_id == NULL){
+         $messages['danger'] = 'You are not registered!'; 
+
         return $this->render('view', [
-            'model' => $model,
-            ]);
+                'model'     => $model,
+                'cat'       => $cat,
+                'comments'  => $comments,
+                'username'  => $username,
+                'post'      => $post,
+                'messages'  => $messages,
+                ]);
+     }
+         elseif ($post->load(Yii::$app->request->post()) && $post->save()) {
+            return $this->redirect('/photo?id='.$id);
+        } else {
+
+            return $this->render('view', [
+                'model'     => $model,
+                'cat'       =>  $cat,
+                'comments'  => $comments,
+                'username'  => $username,
+                'post'      => $post,
+                ]);
+        }
+
     }
 
     /**

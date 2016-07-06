@@ -7,22 +7,33 @@ use yii\widgets\LinkPager;
     <div class="container">
         <?php foreach ($models as $model):?>
             <div class="col-xs-9 col-sm-5 col-md-4 col-lg-3">
-                <div class="thumbnail">
-                    <a href='/photo?id=<?php echo $model->id;?>'>
-                        <img src='<?php echo $model->images;?>' width="400" hight="400" title='увеличить'>
-                    </a>
+                <div class="thumbnail" >
+                    <div class="caption" style = "height: 140px;" >
+                        <a href='/photo?id=<?php echo $model->id;?>'>
+                            <img src='<?php echo $model->images;?>' title='увеличить'>
+                        </a>
+                    </div>
                     <div class="caption">
-                        <h3><?php echo $model->title;?></h3>
+                        <?php if(strlen($model->title) >= 20):?>
+                            <h3><?php echo substr($model->title, 0, 20); ?>...</h3>
+                        <?php else:?>
+                            <h3><?php echo substr($model->title, 0, 20); ?></h3>
+                        <?php endif;?>
                         <?php 
                         $rand = array('default','success','info','warning','danger'); 
                         $rand = $rand[rand(0,4)];   
                         ?>
                         <span class="label label-<?php echo $rand;?>">
-                            <?php echo $model->category_id;?>
+                            <?php echo $category;?>
                         </span>
 
                         <br/><br/>
-                        <p><?php echo $model->description;?></p>
+                        <?php if(strlen($model->description) >= 30):?>
+                            <p><?php echo substr($model->description, 0, 30); ?>...</p>
+                        <?php else:?>
+                            <p><?php echo substr($model->description, 0, 30); ?></p>
+                        <?php endif;?>
+                        
                         <p>
                             <a href='/photo?id=<?php echo $model->id;?>' class="btn btn-primary " >Full width</a>
                             <a href="/gallery?user=<?php echo $model->user_id;?>" class="btn btn-default" role="button">User's album</a>

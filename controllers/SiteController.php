@@ -10,6 +10,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use yii\data\Pagination;
 use app\models\Photos;
+use app\models\Categories;
 
 
 /**
@@ -68,9 +69,16 @@ public function actionIndex()
   ->limit($pages->limit)
   ->all();
 
+  foreach ($models as $key) {
+
+            $cat = Categories::findOne($key['category_id']);
+            $category = $cat->title;
+        }
+
   return $this->render('index', [
-   'models' => $models,
-   'pages' => $pages,
+   'models'   => $models,
+   'pages'    => $pages,
+   'category' => $category,
    ]);
 }
 
