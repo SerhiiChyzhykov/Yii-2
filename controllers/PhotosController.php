@@ -14,6 +14,7 @@ use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use yii\helpers\ArrayHelper;
 use app\controllers\Query;
+use yii\data\Pagination;
 /**
  * BanerController implements the CRUD actions for Baner model.
  */
@@ -38,17 +39,43 @@ class PhotosController extends Controller
      * Lists all Photos models.
      * @return mixed
      */
-    public function actionIndex()
+    public function actionIndex($user)
     {
-        $searchModel = new PhotosSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+     $query = Photos::find()->where(['user_id' => $user]);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            ]);
+     $countQuery = clone $query;
+
+     $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 12]);
+     $pages->pageSizeParam = false;
+     if($user == ''):
+        
+         $user = Yii::$app->user->identity->id;
+     $models = $query->offset($pages->offset)
+     ->where(['user_id' => $user])
+     ->limit($pages->limit)
+     ->all();
+
+     else:
+
+        $models = $query->offset($pages->offset)
+    ->where(['user_id' => $user])
+    ->limit($pages->limit)
+    ->all();
+
+    endif;
+
+    foreach ($models as $key) {
+
+        $cat = Categories::findOne($key['category_id']);
+        $category = $cat->title;
     }
 
+    return $this->render('index', [
+       'models'   => $models,
+       'pages'    => $pages,
+       'category' => $category,
+       ]);
+}
     /**
      * Displays a single Photos model.
      * @param integer $id
@@ -82,29 +109,29 @@ class PhotosController extends Controller
         if($post->load(Yii::$app->request->post()) && $post->user_id == NULL){
          $messages['danger'] = 'You are not registered!'; 
 
-        return $this->render('view', [
-                'model'     => $model,
-                'cat'       => $cat,
-                'comments'  => $comments,
-                'username'  => $username,
-                'post'      => $post,
-                'messages'  => $messages,
-                ]);
+         return $this->render('view', [
+            'model'     => $model,
+            'cat'       => $cat,
+            'comments'  => $comments,
+            'username'  => $username,
+            'post'      => $post,
+            'messages'  => $messages,
+            ]);
      }
-         elseif ($post->load(Yii::$app->request->post()) && $post->save()) {
-            return $this->redirect('/photo?id='.$id);
-        } else {
+     elseif ($post->load(Yii::$app->request->post()) && $post->save()) {
+        return $this->redirect('/photo?id='.$id);
+    } else {
 
-            return $this->render('view', [
-                'model'     => $model,
-                'cat'       =>  $cat,
-                'comments'  => $comments,
-                'username'  => $username,
-                'post'      => $post,
-                ]);
-        }
-
+        return $this->render('view', [
+            'model'     => $model,
+            'cat'       =>  $cat,
+            'comments'  => $comments,
+            'username'  => $username,
+            'post'      => $post,
+            ]);
     }
+
+}
 
     /**
      * Creates a new Photos model.

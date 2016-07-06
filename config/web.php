@@ -45,6 +45,7 @@ $config = [
            'photo/add'=>'photos/create',
            'photo/update'=>'photos/update',
            'photo'=>'photos/view',
+           'photos' => 'photos/index',
            'user/login'=>'user/security/login',
            'user/logout'=>'user/security/logout',
            'home'=>'site/index',

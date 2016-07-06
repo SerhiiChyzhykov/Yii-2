@@ -48,7 +48,7 @@ AppAsset::register($this);
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Hello '.Yii::$app->user->identity->username.' <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href =" '.Url::to('/user/profile').'">Profile</a></li>
-                    <li><a href =" '.Url::to('/photos').'">Gallery</a></li>
+                    <li><a href =" '.Url::to('/photos?user='.Yii::$app->user->identity->id).'">Gallery</a></li>
                     <li>
                     '
                     . Html::beginForm(['/user/logout'], 'post')

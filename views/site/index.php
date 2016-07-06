@@ -36,7 +36,7 @@ use yii\widgets\LinkPager;
                         
                         <p>
                             <a href='/photo?id=<?php echo $model->id;?>' class="btn btn-primary " >Full width</a>
-                            <a href="/gallery?user=<?php echo $model->user_id;?>" class="btn btn-default" role="button">User's album</a>
+                            <a href="/photos?user=<?php echo $model->user_id;?>" class="btn btn-default" role="button">User's album</a>
                         </p>
                     </div>
                 </div>

@@ -71,9 +71,9 @@ public function actionIndex()
 
   foreach ($models as $key) {
 
-            $cat = Categories::findOne($key['category_id']);
-            $category = $cat->title;
-        }
+    $cat = Categories::findOne($key['category_id']);
+    $category = $cat->title;
+  }
 
   return $this->render('index', [
    'models'   => $models,

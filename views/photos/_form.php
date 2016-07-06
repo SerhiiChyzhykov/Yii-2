@@ -21,9 +21,11 @@ use yii\widgets\ActiveForm;
  <?= $form->field($model , 'file')->fileInput(['required'=>"required"]) ?>
 
  <? $user = Yii::$app->user->identity->id;?>
- <?= $form->field($model, 'user_id')->textInput(['maxlength' => true, 'value'=>"$user" ,'type' => "hidden" ] ) ?>
 
- <?= $form->field($model, 'date')->textInput(['maxlength' => true, 'type' => "hidden",  'value' => date('Y-m-d')]) ?>
+ <?= Html::activeHiddenInput($model, 'user_id', $options = ['value'=>$user]) ?>
+
+ <?= Html::activeHiddenInput($model, 'date', $options = ['value' => date('Y-m-d')]) ?>
+
 
  <div class="form-group">
   <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
