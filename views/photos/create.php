@@ -8,7 +8,6 @@ use yii\helpers\Html;
 
 $this->title = 'Add Photo';
 
-$this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="baner-create">
 

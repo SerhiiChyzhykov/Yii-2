@@ -94,9 +94,9 @@ $this->title = 'Photo';
         </div>
         <div class="panel-body">
             <div class="modal-body">
-                <?php $form = ActiveForm::begin() ?>
+            <?php $forms = ActiveForm::begin() ?>
 
-                <?= $form->field($post, 'post')->textInput(['maxlength' => true , 'required'=>"required"]) ?>
+                <?= $forms->field($post, 'post')->textInput(['maxlength' => true , 'required'=>"required"]) ?>
 
                 <?php $user = Yii::$app->user->identity->id;?>
 

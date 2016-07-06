@@ -16,7 +16,7 @@ use yii\helpers\ArrayHelper;
 use app\controllers\Query;
 use yii\data\Pagination;
 /**
- * BanerController implements the CRUD actions for Baner model.
+ * PhotosController implements the CRUD actions for Photos model.
  */
 class PhotosController extends Controller
 {
@@ -124,20 +124,9 @@ class PhotosController extends Controller
     }
      if ($photo->load(Yii::$app->request->post()) && $photo->save()) {
         return $this->redirect(['view', 'id' => $photo->id]);
-    } else {
-     $items = ArrayHelper::map(Categories::find()->all(), 'id', 'title');
-       return $this->render('view', [
-        'model'     => $model,
-        'cat'       => $cat,
-        'comments'  => $comments,
-        'username'  => $username,
-        'post'      => $post,
-        'messages'  => $messages,
-        'items'     => $items,
-        'photo'     => $photo,
-        ]);
+    
  }
-    if($post->load(Yii::$app->request->post()) && $post->user_id == NULL){
+    elseif($post->load(Yii::$app->request->post()) && $post->user_id == NULL){
        $messages['danger'] = 'You are not registered!'; 
 
        return $this->render('view', [
@@ -205,7 +194,7 @@ class PhotosController extends Controller
 }
 
     /**
-     * Updates an existing Baner model.
+     * Updates an existing Photos model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed

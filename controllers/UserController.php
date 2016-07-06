@@ -10,7 +10,7 @@ use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use app\controllers\Query;
 /**
- * UserController implements the CRUD actions for Baner model.
+ * UserController implements the CRUD actions for User model.
  */
 class UserController extends Controller
 {
