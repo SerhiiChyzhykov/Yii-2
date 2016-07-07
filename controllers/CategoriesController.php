@@ -4,10 +4,12 @@ namespace app\controllers;
 
 use Yii;
 use app\models\Categories;
+use app\models\Photos;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\data\Pagination;
 
 /**
  * CategoriesController implements the CRUD actions for Categories model.
@@ -20,35 +22,69 @@ class CategoriesController extends Controller
     public function behaviors()
     {
         return [
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'delete' => ['POST'],
-                ],
-            ],
+        'verbs' => [
+        'class' => VerbFilter::className(),
+        'actions' => [
+        'delete' => ['POST'],
+        ],
+        ],
         ];
     }
 
-     /**
-     * Updates an existing Categories model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
+
+    /**
+     * Lists all Photos models.
      * @return mixed
      */
-    public function actionUpdate($id)
+    public function actionIndex()
     {
-        $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['update', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
-        }
+        $count = (new \yii\db\Query())
+        ->from('categories')
+        ->count();
+
+        $cat_id = rand(1,$count);
+
+        $photo = Photos::find()
+        ->limit('4')
+        ->all();
+
+        $cat = Categories::find()
+        ->all();
+
+        return $this->render('index', [
+         'photo'   => $photo,
+         'cat'     => $cat,
+         'cat_id'  => $cat_id,
+
+         ]);
     }
 
-   
+    public function actionView($id)
+    {
+        $query = Photos::find()->where(['category_id' => $id]);
+
+        $countQuery = clone $query;
+
+        $pages = new Pagination(['totalCount' => $countQuery->count(), 'pageSize' => 12]);
+
+        $pages->pageSizeParam = false;
+        $photo = $query->offset($pages->offset)
+        ->limit($pages->limit)
+        ->all();
+
+        foreach ($photo as $key) {
+
+            $cat = Categories::findOne($key['category_id']);
+            $category = $cat->title;
+        }
+
+        return $this->render('view', [
+            'photo'   => $photo,
+            'pages'    => $pages,
+            'category' => $category,
+            ]);
+    }
 
     /**
      * Finds the Categories model based on its primary key value.

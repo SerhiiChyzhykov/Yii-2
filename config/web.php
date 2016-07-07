@@ -60,6 +60,8 @@ $config = [
            'user/networks'=>'user/settings/networks',
            'user/request'=>'user/recovery/request',
            'user/request'=>'user/recovery/request',
+           'categories'=>'categories/index',
+           'category'=>'categories/view',
             ],
         ],
   
