@@ -66,13 +66,14 @@ public function actionIndex()
   
   $pages->pageSizeParam = false;
   $models = $query->offset($pages->offset)
+  ->orderBy('id DESC')
   ->limit($pages->limit)
   ->all();
 
   foreach ($models as $key) {
 
-    $cat = Categories::findOne($key['category_id']);
-    $category = $cat->title;
+    $category = Categories::find()->all();
+
   }
 
   return $this->render('index', [

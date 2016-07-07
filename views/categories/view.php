@@ -18,14 +18,14 @@ $this->title = 'Gallery';
                 <div class="thumbnail" >
                     <div class="caption" style = "height: 140px;" >
                         <a href='/photo?id=<?php echo $row->id;?>'>
-                            <img src='<?php echo $row->images;?>' title='увеличить'>
+                            <img src='<?php echo $row->images;?>' title='увеличить' style="height: 155px;">
                         </a>
                     </div>
                     <div class="caption">
-                        <?php if(strlen($row->title) >= 20):?>
-                            <h3><?php echo substr($row->title, 0, 20); ?>...</h3>
+                        <?php if(strlen($row->title) >= 17):?>
+                            <h3><?php echo substr($row->title, 0, 17); ?>...</h3>
                         <?php else:?>
-                            <h3><?php echo substr($row->title, 0, 20); ?></h3>
+                            <h3><?php echo substr($row->title, 0, 17); ?></h3>
                         <?php endif;?>
                         <?php 
                         $rand = array('default','success','info','warning','danger'); 

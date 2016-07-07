@@ -10,32 +10,34 @@ use yii\widgets\LinkPager;
                 <div class="thumbnail" >
                     <div class="caption" style = "height: 140px;" >
                         <a href='/photo?id=<?php echo $model->id;?>'>
-                            <img src='<?php echo $model->images;?>' title='увеличить'>
+                        <img src='<?php echo $model->images;?>' title='увеличить' style="height: 155px;">
                         </a>
                     </div>
                     <div class="caption">
-                        <?php if(strlen($model->title) >= 20):?>
-                            <h3><?php echo substr($model->title, 0, 20); ?>...</h3>
+                        <?php if(strlen($model->title) >= 17):?>
+                            <h3><?php echo substr($model->title, 0, 17); ?>...</h3>
                         <?php else:?>
-                            <h3><?php echo substr($model->title, 0, 20); ?></h3>
+                            <h3><?php echo substr($model->title, 0, 17); ?></h3>
                         <?php endif;?>
                         <?php 
                         $rand = array('default','success','info','warning','danger'); 
                         $rand = $rand[rand(0,4)];   
                         ?>
                         <span class="label label-<?php echo $rand;?>">
-                            <?php echo $category;?>
+                            <?php foreach ($category as $key):?>
+                                <?php if($key->id == $model->category_id):?>
+                                    <?php echo $key->title;?>
+                                <?php endif;?>
+                            <?php endforeach;?>
                         </span>
-
                         <br/><br/>
                         <?php if(strlen($model->description) >= 30):?>
                             <p><?php echo substr($model->description, 0, 30); ?>...</p>
                         <?php else:?>
                             <p><?php echo substr($model->description, 0, 30); ?></p>
                         <?php endif;?>
-                        
                         <p>
-                            <a href='/photo?id=<?php echo $model->id;?>' class="btn btn-primary " >Full width</a>
+                            <a href='/photo?id=<?php echo $model->id;?>' class="btn btn-primary" >Full width</a>
                             <a href="/photos?user=<?php echo $model->user_id;?>" class="btn btn-default" role="button">User's album</a>
                         </p>
                     </div>
@@ -45,11 +47,7 @@ use yii\widgets\LinkPager;
     </div>
     <div class="navigation">
         <center>
-            <?
-            echo LinkPager::widget([
-                'pagination' => $pages,
-                ]);
-                ?>
-            </center>
-        </div>
+            <?php echo LinkPager::widget(['pagination' => $pages]);?>
+        </center>
     </div>
+</div>
