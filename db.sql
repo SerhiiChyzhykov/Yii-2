@@ -26,9 +26,9 @@ CREATE TABLE IF NOT EXISTS `categories` (
 DELETE FROM `categories`;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
 INSERT INTO `categories` (`id`, `title`) VALUES
-	(1, 'test'),
-	(2, '2'),
-	(3, '3');
+	(1, 'test1'),
+	(2, 'test2'),
+	(3, 'test3');
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 
 
@@ -68,19 +68,15 @@ CREATE TABLE IF NOT EXISTS `photos` (
   `description` varchar(50) NOT NULL DEFAULT '0',
   `date` varchar(50) NOT NULL DEFAULT '0000-00-00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы yii.photos: ~15 rows (приблизительно)
+-- Дамп данных таблицы yii.photos: ~21 rows (приблизительно)
 DELETE FROM `photos`;
 /*!40000 ALTER TABLE `photos` DISABLE KEYS */;
 INSERT INTO `photos` (`id`, `user_id`, `category_id`, `images`, `title`, `description`, `date`) VALUES
 	(34, 1, 2, 'uploads/10de4d7565f0f3b1d275.jpg', '1', '1', '0000-00-00'),
 	(35, 3, 1, 'uploads/37448f8c6199be74fa5b.jpg', '1', '2', '0000-00-00'),
-	(36, 44, 1, 'uploads/6cc5f7500ea381f1b570.jpg', 'test', 'test', '0000-00-00'),
-	(37, 44, 2, 'uploads/0fd9ec817c807db811d1.jpg', 'test2', 'test2', '2016-07-05'),
-	(38, 44, 1, 'uploads/6cc5f7500ea381f1b570.jpg', 'Mauris blandit aliquet elit', 'Mauris blandit aliquet elit', '2016-07-05'),
-	(39, 44, 2, 'uploads/f93e00997b9ad01abf87.jpg', 'Mauris blandit aliquet elit', 'Mauris blandit aliquet elit', '2016-07-05'),
-	(40, 44, 1, 'uploads/fda2118cea738c754201.jpg', 'Mauris blandit aliquet elit', 'Mauris blandit aliquet elit', '2016-07-05'),
+	(40, 44, 1, 'uploads/fda2118cea738c754201.jpg', 'Mauris blandit aliquet elit1', 'Mauris blandit aliquet elit1', '2016-07-06'),
 	(41, 44, 3, 'uploads/72f590d9d8955945b913.jpg', 'Mauris blandit aliquet elit', 'Mauris blandit aliquet elit', '2016-07-05'),
 	(42, 44, 2, 'uploads/7e7e75c899998d061561.jpg', 'Mauris blandit aliquet elit', 'Mauris blandit aliquet elit', '2016-07-05'),
 	(43, 44, 2, 'uploads/f3d086a122441034a6ca.jpg', 'Mauris blandit aliquet elit', 'Mauris blandit aliquet elit', '2016-07-05'),
@@ -88,7 +84,17 @@ INSERT INTO `photos` (`id`, `user_id`, `category_id`, `images`, `title`, `descri
 	(45, 44, 2, 'uploads/0dc9f787a388523dc06b.jpg', 'Mauris blandit aliquet elit', 'Mauris blandit aliquet elit', '2016-07-05'),
 	(46, 44, 2, 'uploads/c7d0b8173a1f38bd266a.jpg', 'Mauris blandit aliquet elit', 'Mauris blandit aliquet elit', '2016-07-05'),
 	(47, 44, 2, 'uploads/94e907c646f67b86067c.jpg', 'teeeee', 'test', '2016-07-05'),
-	(48, 44, 1, 'uploads/881f0fd65767509dfddc.jpg', 'ttqwewq', 'ewqeqw', '2016-07-05');
+	(48, 44, 1, 'uploads/881f0fd65767509dfddc.jpg', 'ttqwewq', 'ewqeqw', '2016-07-05'),
+	(49, 44, 1, 'uploads/96e74a4ec11129a498b0.jpg', 'Quisque velit nisi, pretium ut lacinia in, element', 'Quisque velit nisi, pretium ut lacinia in, element', '2016-07-07'),
+	(50, 44, 2, 'uploads/8e123ca1aa51e9939298.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing', 'Lorem ipsum dolor sit amet, consectetur adipiscing', '2016-07-07'),
+	(51, 44, 2, 'uploads/5a53a69d1cfed41b58e8.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing', 'Lorem ipsum dolor sit amet, consectetur adipiscing', '2016-07-07'),
+	(52, 44, 2, 'uploads/9a844b7f216504fc3e9d.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing', 'Lorem ipsum dolor sit amet, consectetur adipiscing', '2016-07-07'),
+	(53, 44, 1, 'uploads/c887f54babbcb8198138.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing', 'Lorem ipsum dolor sit amet, consectetur adipiscing', '2016-07-07'),
+	(54, 44, 1, 'uploads/d3d3ea1f834b3bea6b31.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing', 'Lorem ipsum dolor sit amet, consectetur adipiscing', '2016-07-07'),
+	(55, 44, 3, 'uploads/2df3ff6e2afee1bc28c7.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing', 'Lorem ipsum dolor sit amet, consectetur adipiscing', '2016-07-07'),
+	(56, 44, 2, 'uploads/54d59ca3d91dd2f89152.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing', 'Lorem ipsum dolor sit amet, consectetur adipiscing', '2016-07-07'),
+	(57, 44, 1, 'uploads/7935b503f3525a43a968.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing', 'Lorem ipsum dolor sit amet, consectetur adipiscing', '2016-07-07'),
+	(58, 44, 2, 'uploads/9a19e4f2f4f25f449320.jpg', 'Lorem ipsum dolor sit amet, consectetur adipiscing', 'Lorem ipsum dolor sit amet, consectetur adipiscing', '2016-07-07');
 /*!40000 ALTER TABLE `photos` ENABLE KEYS */;
 
 
@@ -99,9 +105,9 @@ CREATE TABLE IF NOT EXISTS `post` (
   `user_id` int(11) NOT NULL DEFAULT '0',
   `photo_id` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы yii.post: ~0 rows (приблизительно)
+-- Дамп данных таблицы yii.post: ~21 rows (приблизительно)
 DELETE FROM `post`;
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
 INSERT INTO `post` (`id`, `post`, `user_id`, `photo_id`) VALUES
@@ -122,7 +128,12 @@ INSERT INTO `post` (`id`, `post`, `user_id`, `photo_id`) VALUES
 	(15, 'test', 44, 36),
 	(16, 'test', 44, 34),
 	(17, '213', 44, 36),
-	(18, '123', 44, 34);
+	(18, '123', 44, 34),
+	(19, '999', 44, 34),
+	(20, '1', 44, 34),
+	(21, '2', 44, 40),
+	(22, '4', 44, 40),
+	(23, '213', 44, 59);
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 
 
